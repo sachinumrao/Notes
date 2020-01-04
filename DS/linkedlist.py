@@ -22,14 +22,16 @@ def add_end(a, val):
 def add_mid(a, val, ind):
     x = a
     counter = 0
-    while counter < ind-1:
+    while counter < ind-1 :
         x = x.next
-
+        if x is None:
+            print("Trying to add at place out of bound...")
+            return a
+        counter += 1
+    tmp = x.next
     b = ListNode(val)
-    b.next = x.next
-
-    x = b
-
+    b.next = tmp
+    x.next = b
     return a
 
 
@@ -39,14 +41,31 @@ def remove_from_head(a):
 def remove_from_tail(a):
     x = a
     while x.next.next is not None:
-
         x = x.next
 
-    print(x.next)
     x.next = None
-    print(x.next)
-
     return a
+
+def remove_from_mid(a, ind):
+    x = a
+    counter = 0
+    while counter < ind-1:
+        x = x.next
+        if x is None:
+            print("Trying to delete at a place out of bound...")
+            return a
+        counter += 1
+    x.next = x.next.next
+    return a
+        
+def find_length(a):
+    counter = 0
+    x = a
+    while x is not None:
+        x = x.next
+        counter += 1
+
+    return counter
 
 
 a = ListNode(1)
@@ -57,10 +76,14 @@ a = add_begin(a, -2)
 a = add_end(a,2)
 a = add_end(a,3)
 
-a = add_mid(a, 0, 1)
+a = add_mid(a, 0, 2)
+a = remove_from_mid(a, 2)
+n = find_length(a)
 
-a = remove_from_head(a)
-a = remove_from_tail(a)
+
+print("Length of Linked List : ", n)
+#a = remove_from_head(a)
+#a = remove_from_tail(a)
 
 # Traversing the list
 x = a
